@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import './App.scss';
 import { GoodsList } from './GoodsList';
 
@@ -10,23 +10,23 @@ import { Good } from './types/Good';
 export const App: React.FC = () => {
   const [currentGoods, setCurrentGoods] = useState<Good[]>([]);
 
-  function handleClickAll() {
+  const handleClickAll = useCallback(() => {
     getAll().then(goods => {
       setCurrentGoods(goods);
     });
-  }
+  }, []);
 
-  function handleClickFirstFive() {
+  const handleClickFirstFive = useCallback(() => {
     get5First().then(goods => {
       setCurrentGoods(goods);
     });
-  }
+  }, []);
 
-  function handleClickRed() {
+  const handleClickRed = useCallback(() => {
     getRedGoods().then(goods => {
       setCurrentGoods(goods);
     });
-  }
+  }, []);
 
   return (
     <div className="App">
