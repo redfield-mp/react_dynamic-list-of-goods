@@ -9,34 +9,41 @@ import { Good } from './types/Good';
 
 export const App: React.FC = () => {
   const [currentGoods, setCurrentGoods] = useState<Good[]>([]);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleClickAll = useCallback(() => {
+    setErrorMessage('');
     getAll()
       .then(goods => {
         setCurrentGoods(goods);
       })
-      .catch(error => {
-        throw new Error('Failed to load all goods', error);
+      .catch(() => {
+        setCurrentGoods([]);
+        setErrorMessage('Failed to load all goods');
       });
   }, []);
 
   const handleClickFirstFive = useCallback(() => {
+    setErrorMessage('');
     get5First()
       .then(goods => {
         setCurrentGoods(goods);
       })
-      .catch(error => {
-        throw new Error('Failed to load first five goods', error);
+      .catch(() => {
+        setCurrentGoods([]);
+        setErrorMessage('Failed to load first five goods');
       });
   }, []);
 
   const handleClickRed = useCallback(() => {
+    setErrorMessage('');
     getRedGoods()
       .then(goods => {
         setCurrentGoods(goods);
       })
-      .catch(error => {
-        throw new Error('Failed to load red goods', error);
+      .catch(() => {
+        setCurrentGoods([]);
+        setErrorMessage('Failed to load red goods');
       });
   }, []);
 
@@ -59,6 +66,8 @@ export const App: React.FC = () => {
       <button type="button" data-cy="red-button" onClick={handleClickRed}>
         Load red goods
       </button>
+
+      {errorMessage && <p className="App__error">{errorMessage}</p>}
 
       <GoodsList goods={currentGoods} />
     </div>
