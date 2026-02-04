@@ -11,21 +11,33 @@ export const App: React.FC = () => {
   const [currentGoods, setCurrentGoods] = useState<Good[]>([]);
 
   const handleClickAll = useCallback(() => {
-    getAll().then(goods => {
-      setCurrentGoods(goods);
-    });
+    getAll()
+      .then(goods => {
+        setCurrentGoods(goods);
+      })
+      .catch(error => {
+        throw new Error('Failed to load all goods', error);
+      });
   }, []);
 
   const handleClickFirstFive = useCallback(() => {
-    get5First().then(goods => {
-      setCurrentGoods(goods);
-    });
+    get5First()
+      .then(goods => {
+        setCurrentGoods(goods);
+      })
+      .catch(error => {
+        throw new Error('Failed to load first five goods', error);
+      });
   }, []);
 
   const handleClickRed = useCallback(() => {
-    getRedGoods().then(goods => {
-      setCurrentGoods(goods);
-    });
+    getRedGoods()
+      .then(goods => {
+        setCurrentGoods(goods);
+      })
+      .catch(error => {
+        throw new Error('Failed to load red goods', error);
+      });
   }, []);
 
   return (
